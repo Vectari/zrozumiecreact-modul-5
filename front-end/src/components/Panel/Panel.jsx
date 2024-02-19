@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { List } from "../List/List";
 import { Form } from "../Form/Form";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import styles from "./Panel.module.css";
 
 export function Panel() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/words")
@@ -33,9 +35,20 @@ export function Panel() {
   function handleDeleteItem(id) {
     fetch(`http://localhost:3000/words/${id}`, {
       method: "DELETE",
-    }).then(() => {
-      setData((prevData) => prevData.filter((item) => item.id !== id));
-    });
+    })
+      .then((res) => {
+        if (res.ok) {
+          setData((prevData) => prevData.filter((item) => item.id !== id));
+        } else {
+          throw new Error("Deleting error!");
+        }
+      })
+      .catch((e) => {
+        setError(e.message);
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
+      });
   }
 
   if (isLoading) {
@@ -44,6 +57,7 @@ export function Panel() {
 
   return (
     <>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <section className={styles.section}>
         <Form onFormSunbmit={handleFormSubmit} />
         <List data={data} onDeleteItem={handleDeleteItem} />
