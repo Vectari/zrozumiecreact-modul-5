@@ -30,6 +30,14 @@ export function Panel() {
       });
   }
 
+  function handleDeleteItem(id) {
+    fetch(`http://localhost:3000/words/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    });
+  }
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -38,7 +46,7 @@ export function Panel() {
     <>
       <section className={styles.section}>
         <Form onFormSunbmit={handleFormSubmit} />
-        <List data={data} />
+        <List data={data} onDeleteItem={handleDeleteItem} />
       </section>
     </>
   );
