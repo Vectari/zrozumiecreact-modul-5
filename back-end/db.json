@@ -29,6 +29,24 @@
       "translation": "lemon",
       "category": "noun",
       "id": 5
+    },
+    {
+      "word": "window",
+      "translation": "okno",
+      "category": "noun",
+      "id": 6
+    },
+    {
+      "word": "koń",
+      "translation": "horse",
+      "category": "noun",
+      "id": 7
+    },
+    {
+      "word": "rower",
+      "translation": "bike",
+      "category": "noun",
+      "id": 8
     }
   ]
 }

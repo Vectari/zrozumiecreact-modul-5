@@ -23,14 +23,11 @@ export function Panel() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    }).then(() => {
-      fetch("http://localhost:3000/words")
-        .then((res) => res.json())
-        .then((res) => {
-          setData(res);
-          setIsLoading(false);
-        });
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setData((prevData) => [...prevData, res]);
+      });
   }
 
   if (isLoading) {
